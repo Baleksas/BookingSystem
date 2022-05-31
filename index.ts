@@ -19,7 +19,7 @@ app.use(
     schema: buildSchema([Root, EventSchema, EventInput].join(" ")),
     rootValue: {
       events: () => {
-        return events;
+        return Event.find();
       },
       createEvent: (args: any) => {
         //  22:34
@@ -52,7 +52,8 @@ app.use(
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.tlqlq.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+    // `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.tlqlq.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+    `mongodb+srv://new_user_1:a2uBNu3eKXWytU6@cluster0.tlqlq.mongodb.net/events-react-dev?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(3000);
