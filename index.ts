@@ -19,7 +19,15 @@ app.use(
     schema: buildSchema([Root, EventSchema, EventInput].join(" ")),
     rootValue: {
       events: () => {
-        return Event.find();
+        return Event.find()
+          .then((events: any) => {
+            return events.map((event: any) => {
+              return { ...event._doc, _id: event.id };
+            });
+          })
+          .catch((error: any) => {
+            console.log(error);
+          });
       },
       createEvent: (args: any) => {
         //  22:34
@@ -36,6 +44,7 @@ app.use(
             console.log(result);
             return {
               ...result._doc,
+              _id: result.id,
             };
           })
           .catch((error: any) => {
