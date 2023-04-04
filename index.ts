@@ -9,6 +9,8 @@ import mongoose from "mongoose";
 
 let Event = require("./models/event");
 
+import * as dotenv from "dotenv";
+dotenv.config();
 const app = express();
 
 app.use(bodyParser.json());
@@ -29,7 +31,14 @@ app.use(
             console.log(error);
           });
       },
-      createEvent: (args: any) => {
+      createEvent: (args: {
+        eventInput: {
+          title: string;
+          description: string;
+          price: number;
+          date: string;
+        };
+      }) => {
         //  22:34
         const event = new Event({
           title: args.eventInput.title,
@@ -61,11 +70,11 @@ app.use(
 
 mongoose
   .connect(
-    // `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.tlqlq.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
-    `mongodb+srv://new_user_1:a2uBNu3eKXWytU6@cluster0.tlqlq.mongodb.net/events-react-dev?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.user}:${process.env.password}@cluster0.tlqlq.mongodb.net/${process.env.mongodb}?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(3000);
+    console.log("Listening");
   })
   .catch((err) => {
     console.error(err);
